@@ -1,0 +1,44 @@
+.loginSection {
+    background-size: cover;
+    width: 100%;
+}
+
+.loginSection .container {
+    height: 100vh;
+    z-index: 1;
+    position: relative;
+
+}
+
+.container .card {
+    height: 400px;
+    width: 400px;
+    background-color: rgba(255,255,255,0.13);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.3);
+    padding: 50px 35px;
+}
+
+
+.card-title h2 {
+    color: #c1267c;
+}
+
+
+
+.container .card .card-body .btn {
+    background-color: #c1267c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-left: 70px;
+    align-items: center;
+    
+    
+}

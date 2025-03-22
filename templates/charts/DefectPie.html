@@ -1,0 +1,61 @@
+
+
+<h1> Defect Chart </h1>
+
+{#{{ Defect_pieChart(jiraDetails,project,filters) }}#}
+{{ issues_piechart(jiraDetails,project) }}
+
+
+	
+    <div>
+        defect chart
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div id = 'piechart' class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        var data =  {{ issues_piechart(jiraDetails,project)|safe }};
+        var id = 'piechart'
+		var myChart = echarts.init(document.getElementById(id));
+		var option = {
+        title: {
+          text: 'Pie chart',
+          subtext: 'Fake Data',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left'
+        },
+        series: [
+          {
+            // name: 'Access From',
+            type: 'pie',
+            radius: ['40%', '70%'],
+            data: data,
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      };
+      myChart.setOption(option);
+
+    
+    </script>
+  

@@ -1,0 +1,60 @@
+<div id = 'linechart-{{ChartId}}' class="chart-container"></div>
+
+<script>
+    var data =  {{ chartData | safe }};
+    var id = 'linechart-{{ChartId}}'
+	var myChart = echarts.init(document.getElementById(id));
+
+    var option = {
+        title : {
+            text: 'Issue Trend',
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+          orient: 'bottom',
+          left: 'center'
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {show: true, type: ['line', 'bar']},
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        dataZoom: [
+            {
+                id: 'dataZoomX',
+                type: 'slider',
+                xAxisIndex: [0],
+                filterMode: 'filter'
+            },
+            {
+                id: 'dataZoomY',
+                type: 'slider',
+                yAxisIndex: [0],
+                filterMode: 'empty'
+            }
+        ],
+        calculable : true,
+        xAxis : [
+            {
+                type : 'time',
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                
+            }
+        ],
+        series : data
+
+    };
+    myChart.setOption(option);
+
+</script>

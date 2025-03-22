@@ -1,0 +1,144 @@
+.navbar {
+    
+    background-color: #406692; 
+    
+    /* position: absolute; */
+    height: 80px;
+    
+    border-radius: 2px;
+    box-shadow: 2px 4px 12px 4px rgba(0,0,0,0.2);
+    padding: 0.5rem;
+    
+    
+}
+
+.offcanvas {
+    
+    background-color: #fff;
+    
+
+    
+}
+
+/*.container {
+    position: relative; 
+    left: -50; 
+}*/
+
+
+.navbar-brand {
+    /* position: relative; */
+    /* left: 10; */
+    /* position: relative; */
+    font-weight: 500;
+    pointer-events: none;
+    color: #fff;
+    font-size: 24px;
+    
+    transition: 0.3s color;
+}
+
+
+
+
+ .navbar-brand:hover, .navbar-brand:active {
+    color: #f28b82;  
+
+} 
+
+.logo {
+    
+    width: 28px;
+    padding-bottom: 5px;
+    padding-right: 4px;
+}
+
+.btn {
+    /* position: relative; */
+    /* left: 10%; */
+    background-color: #c1267c;
+    width: 100px;
+    margin-left: 50px;
+    /* border-width: 1px; */
+    /* border-color: #c1267c; */
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 10px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    /* transition: 0.2s   font-weight, color ;     */
+}
+
+/*.btn-inverse:hover {
+    color:#c1267c;
+    background-color: #fff;
+    border-color: #f28b82; 
+    font-weight:700;
+    
+}*/
+
+.navbar-toggler {
+    border: none;
+    font-size: 1.25rem;
+    
+}
+
+
+.navbar-toggler:focus, .btn-close:focus { 
+    box-shadow: none;
+    outline: none;
+    
+}
+
+.nav-link {
+    color: #fff; 
+    
+    font-weight:500;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: #f28b82;
+    
+
+}
+
+.navbar-nav .nav-link.active{
+
+    color: #f28b82;
+}
+
+
+.offcanvas-title {
+    
+    color: #406692;
+}
+
+
+
+
+@media (min-width: 991px){
+    .nav-link::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0%;
+        height: 2px;
+        
+
+        background-color: #c1267c;
+        visibility: hidden; 
+        transition: 0.3s ease-in-out;
+    }
+
+
+
+    .nav-link:hover::before, .nav-link:active::before {
+        width: 100%;
+        visibility: visible;
+
+    }
+}

@@ -1,0 +1,87 @@
+.home-section {
+    /* background: url(/static/images/new_jira.png) no-repeat center; */
+    background-size: cover;
+    width: 100%;
+    
+     
+    
+}
+
+.home-section::before {
+    background-color: rgb(250, 249, 249,0.1);
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0; 
+}
+
+.home-section .container {
+    height: 100vh;
+    z-index: 1;
+    position: relative;
+
+}
+
+.home-section h1 {
+    font-size: 1.4em;
+    
+}  
+
+.home-section p {
+    font-size: 1.2em;
+    
+}
+
+/* .btnst {
+    padding: 30px;
+    
+} */
+
+.btnst {
+    position: relative;
+}
+
+.btnst button {
+    position:relative;
+    right: 25%;
+    padding :12px;
+    margin-right: 330px;
+    background-color:#c1267c;
+    color: #fff;
+    width: 30%;
+    border-radius: 10px;
+
+
+}
+/* 
+.btnst button:hover{
+    color: #c1267c;
+
+} */
+
+
+
+.title {
+    padding-right: 250px;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.subtitle {
+    padding-right: 250px;
+    animation: fadeInUp 1s ease-in-out 0.5s;
+}
+
+
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

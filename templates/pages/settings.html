@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {% include '/includes/commonHeaders.html' %}
+	<!-- Begin Page Specific CSS & JS -->
+		<script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+		<style>
+			/* Set a height for the chart container */
+			.chart-container {
+				height: 400px;
+				width: 100%;
+				display: inline-block; /* Display containers in a row */
+			}
+		</style>
+		
+
+	<!-- End of Page Specific CSS & JS -->
+</head>
+<body id="page-top">
+	<!-- Page Wrapper -->
+    <div id="wrapper">
+		
+		<!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+			
+				{% include '/includes/topNav.html' %}
+	
+				<!-- Begin Page Content -->
+                <div class="container-fluid">
+				
+				<!-- Page Heading -->
+					{% include '/includes/PageHeading.html' %}
+					
+                    <!--<h1 class="h3 mb-1 text-gray-800">JIRA Details</h1>-->
+					{{jiraDetails}}
+					
+					{#
+					{% if query!="" %}
+						{% include '/charts/DefectPie.html' %}
+					{% endif %} #}	
+					
+					
+					
+					<div class="card shadow my-5 mx-5 ">
+						
+						<div class="card-header px-5 pt-4 ">
+							{% include '/includes/flash.html' %}
+							<h4 class="font-weight-bold text-primary">JIRA Details</h4>
+							
+						</div>
+						
+						<div class="card-body px-5">
+							<form action="/settings" method="post">
+																	
+								<div class="form-group" hidden>
+									<label class="text-dark"  for="type"><strong>JIRA version</strong></label>
+									<input type="text"  class="form-control"
+										id="type" name="type" aria-describedby="typeHelp"
+										placeholder="Enter jira version" value="JIRA Cloud" >
+									</input>
+								</div>
+								
+								<br>
+								<div class="form-group">
+									<label class="text-dark " for="type"><strong>JIRA Application URL</strong></label>
+									<input type="text"  class="form-control"
+										id="url" name="url" aria-describedby="typeHelp"
+										placeholder="JIRA Credentials for login" required value="{{jira_details['url']}}">
+									</input>
+								</div>
+								<br>
+								<div class="form-group">
+									<label class="text-dark"  for="type"><strong>JIRA Login Email ID</strong></label>
+									<input type="email"  class="form-control"
+										id="email" name="email" aria-describedby="typeHelp"
+										placeholder="JIRA Credentials for login" required value="{{jira_details['email']}}">
+									</input>
+								</div>
+								<br>
+								<div class="form-group">
+									<label class="text-dark"  for="type"><strong>JIRA Application Token</strong></label>
+									<input type="password"  class="form-control"
+										id="token" name="token" aria-describedby="tokenHelp"
+										placeholder="JIRA Credentials for login" required value="{{jira_details['token']}}">
+									</input>
+								</div>
+								<br>
+								
+						  
+								<button type="submit" class="btn btn-primary btn-user  ">
+									Update JIRA Details
+								</button>
+                                        
+                            </form>
+						</div>
+						
+						
+					</div>
+
+
+
+          
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+			
+			{% include '/includes/footer.html' %}
+			
+		</div>
+		
+		
+		
+	</div>
+</body>
+	{% include '/includes/commonJS.html' %}
+	<!-- Begin Page Specific JS -->
+	<!-- End of Page Specific JS -->
+</html>

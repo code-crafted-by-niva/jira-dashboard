@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {% include '/includes/commonHeaders.html' %}
+	<!-- Begin Page Specific CSS & JS -->
+		<script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+		<style>
+			/* Set a height for the chart container */
+			.chart-container {
+				min-height: 300px;
+				width: 100%;
+				display: inline-block; /* Display containers in a row */
+			}
+		</style>
+	
+
+	<!-- End of Page Specific CSS & JS -->
+</head>
+<body id="page-top">
+	<!-- Page Wrapper -->
+    <div id="wrapper">
+		
+		<!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+			
+				{% include '/includes/topNav.html' %}
+	
+				<!-- Begin Page Content -->
+                <div class="container-fluid">
+				
+				<!-- Page Heading -->
+					{% include '/includes/PageHeading.html' %}
+					
+                    <br><br>
+					<div class="row card shadow mb-4  mx-5">
+                        <!-- Card Header - Accordion -->
+                        <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                            <h6 class="m-0 font-weight-bold text-primary">Dashboard Filters</h6>
+								
+                        </a>
+                        <!-- Card Content - Collapse -->
+                        <div class="collapse show" id="collapseCardExample" >
+							<div class="card-body">
+								<form action="{{url_for('dashboard_blueprint.dashboard_dailystatus')}}" method="post">
+								  <div class="form-group">
+									<label for="project text-dark">Project</label>
+										<select class="form-control" id="project" name="project" required>
+											<option value="">Select Project</option>
+											{% for user_project in user_projects %}											
+												<option value="{{user_project['key']}}">{{user_project['key']}} - {{user_project['name']}}</option>
+											{% endfor %}
+										</select>
+									
+									<small id="emailHelp" class="form-text text-muted">Select the project to be visualize the dashboard </small>
+								  </div>
+								  
+								  <div class="form-group">
+									<label for="query text-dark">Custom Query</label>
+									<textarea type="textarea" class="form-control" id="query" name="query" placeholder="JQL custom Query"></textarea>
+								  </div>
+								  
+								  <div class="form-group">
+									<label for="maxResults text-dark">Max results</label>
+									<input value=100
+										   type="number"
+										   class="form-control"
+										   id="maxResults" 
+										   name="maxResults" 
+										   placeholder="Provide number of issues to return in JQL response"
+										   required>
+									</input>
+								  </div>
+								  <button type="submit" class="btn btn-info">Apply Filter</button>
+								</form>
+                            </div>
+                        </div>
+                    </div>
+					
+					
+						{% if jira_request %}
+							<div class="row my-5 mx-5">
+								<div class="col-6">
+									<div class="card border-left-primary shadow h-100 py-2">
+										<div class="card-body">
+				
+											<div class="row">
+											<div class="col">
+											<span class= "h3 mb-0 font-weight-bold text-gray-800">{{projectDetails["key"]}}</span><br>
+											<span class="h5 mb-3 font-weight-bold text-gray-700 text-primary">{{projectDetails["name"]}}</span><br>
+											<span class="text-xs font-weight-bold text-primary text-uppercase mb-1">Project Name</span><br>
+										    </div>
+											<div class="col" style="text-align: right;">
+												<img src="{{projectDetails['project_icon']}}" alt="{{projectDetails['project_icon']}} icon" height="65px">
+												</div>
+											</div>
+											<hr>
+											<div>
+												<span class="text-xs font-weight-bold text-primary text-uppercase mb-1">Issue Types</span><br><br>
+												<div style="display: inline;">
+													<div class="row">
+														{% for issue_type in projectDetails["issueTypes"] %}
+															<div class="col mx-auto text-center">
+																<img src='{{issue_type["icon"]}}' alt="{{issue_type['name']}} icon" height="25px">											
+																<p class="h6 mb-1 text-gray-800">{{issue_type["name"]}}</p>
+															</div>
+														{% endfor %}
+													</div>
+												</div>
+													
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="card border-left-primary shadow h-100 py-2">
+										<div class="card-body">
+											{% set ChartId    = "Issues01" %}
+											{% set ChartTitle = "Issues Count" %}
+											{% set chartData  = get_issue_length(issues) %}
+											{% include '/charts/pie.html' %}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row my-5 mx-5">
+								<div class="col">
+								<div class="card border-left-primary shadow h-100 py-2">
+									<div class="card-body">
+										{% set ChartId    = "Issues02" %}
+										{% set ChartTitle = "IssueTypes Trend" %}
+										{% set chartData  = get_issues_trends(issues) %}
+										{% include '/charts/multiline.html' %}
+									</div>
+								</div>
+								</div>
+							</div>
+
+							<div class="row my-5 mx-5">
+								<div class="col">
+									
+										<div class="card border-left-primary shadow h-100 py-2">
+											<div class="card-body">
+												<div class="row">
+												{% for key in issues %}
+													<div class="col-6">
+													{% set ChartId    = key + "_status_count" %}
+													{% set ChartTitle = key %}
+													{% set chartData  = get_issue_status_count(issues[key]) %}
+													{% include '/charts/pie.html' %}
+													</div>
+												{% endfor %}
+												</div>
+											</div>
+										</div>
+									
+								</div>
+							</div>
+						
+							<div class="row my-5 mx-5">
+								<div class="col-4">
+									<div class="card border-left-primary shadow h-100 py-2">
+										<div class="card-body">
+											<div class="row no-gutters align-items-center">
+												<div class="col mr-2">
+													
+													<div class="h2 mb-0 font-weight-bold text-gray-800">{{total_issues}}</div>
+													<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+														Total Issues
+													</div>
+												</div>
+												<div class="col-auto">
+													<i class="fas fa-calendar fa-2x text-gray-300"></i>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-8">
+									<div class="card border-left-primary shadow h-100 py-2">
+										<div class="card-body">
+											<div class="row no-gutters align-items-center">
+												<div class="col mr-2">
+													
+													<div class="h3 mb-0 font-weight-bold text-gray-800">
+													{{issues_types |join(', ')}}
+													</div>
+													<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+														Issue Types
+													</div>
+													
+												</div>
+												<div class="col-auto">
+													<i class="fas fa-calendar fa-2x text-gray-300"></i>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+								
+
+						{% endif %}
+					<br>
+					
+					
+
+
+
+                    
+
+
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+			
+			{% include '/includes/footer.html' %}
+			
+		</div>
+		
+		
+		
+	</div>
+</body>
+	{% include '/includes/commonJS.html' %}
+	<!-- Begin Page Specific JS -->
+	<!-- End of Page Specific JS -->
+</html>

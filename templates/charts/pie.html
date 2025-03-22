@@ -1,0 +1,43 @@
+
+
+	
+	<div id = 'piechart-{{ChartId}}' class="chart-container"></div>
+    
+
+    <script>
+        
+        var data =  {{ chartData | safe }};
+        var id = 'piechart-{{ChartId}}'
+		var myChart = echarts.init(document.getElementById(id));
+		var option = {
+        title: {
+          text: '{{ChartTitle}}',
+          left: 'right'
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left'
+        },
+        series: [
+          {
+            type: 'pie',
+            radius: ['40%', '70%'],
+            data: data,
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      };
+      myChart.setOption(option);
+
+    
+    </script>
+  
